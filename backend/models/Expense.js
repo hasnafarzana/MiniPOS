@@ -50,7 +50,7 @@ const Expense = {
 
     update(id, fields) {
         const allowed = ['title', 'amount', 'category', 'date', 'description', 'receipt_url', 'status'];
-        const updates = ['updated_at = datetime("now")'];
+        const updates = ["updated_at = datetime('now')"];
         const values = [];
         
         for (const [key, value] of Object.entries(fields)) {
