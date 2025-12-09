@@ -1,0 +1,68 @@
+I already have two React components: `EmployeeDashboard` and `ManagerDashboard` for a Smart Expense Approval System. They both have similar dashboard structures (sidebar, header, content area), but the code is duplicated.
+ 
+Refactor the frontend to use a **shared layout component** called `DashboardLayout` that both dashboards can reuse, so the UI looks consistent and professional.
+ 
+Requirements:
+ 
+1. Create `DashboardLayout` component
+- It should provide the overall page structure:
+  - Left sidebar
+  - Top header bar
+  - Main content area
+- Props:
+  - `user` (object with name, role)
+  - `navItems` (array of `{ id, label, icon?, onClick?, href? }`)
+  - `activeNavId`
+  - `onLogout` (function)
+  - `children` (ReactNode for the specific dashboard content)
+- Sidebar:
+  - Show app logo/title: “Spend Desk”
+  - Show nav items vertically, highlight the active one.
+- Header:
+  - Show current page title (can be passed as `pageTitle` prop or derived from active nav)
+  - On the right: user name + avatar circle with initials, and Logout button.
+- Main area:
+  - Scrollable content area with light background.
+  - Apply consistent padding and max width for content (like `max-w-6xl mx-auto` if using Tailwind).
+ 
+2. Update EmployeeDashboard to use DashboardLayout
+- Import and wrap all existing employee-specific content (summary cards, Create Expense form, My Expenses table) inside `DashboardLayout`.
+- Pass:
+  - `user` (employee user object)
+  - `navItems` something like:
+    - My Expenses
+    - Create Expense
+  - `activeNavId` based on which section is currently shown (you can keep it simple and just highlight “My Expenses” if there is no complex routing).
+- Remove duplicated sidebar/header code from EmployeeDashboard and rely entirely on DashboardLayout.
+ 
+3. Update ManagerDashboard to use DashboardLayout
+- Do the same for ManagerDashboard:
+  - Wrap content (summary cards, tabs, pending approvals table, history table) inside `DashboardLayout`.
+  - `navItems` example:
+    - Pending Approvals
+    - History
+  - `pageTitle` like “Manager Dashboard”.
+- Again, remove duplicated layout code and rely only on DashboardLayout.
+ 
+4. Styling and responsiveness
+- Use the same design language and styles as before (Tailwind CSS if available):
+  - Full-height flex layout (`min-h-screen`).
+  - Fixed-width sidebar on the left (`w-64` on desktop), collapsible or full-width behavior on mobile.
+  - Main content with background like `bg-slate-50` and white rounded cards inside.
+- Ensure:
+  - Sidebar and header look identical for both roles, only nav items + title differ.
+  - Mobile view: sidebar can stack above content or allow horizontal scrolling if needed, but try to keep it usable in a small screen.
+ 
+5. Code organization
+- Put `DashboardLayout` in a separate file like `components/layout/DashboardLayout.jsx`.
+- If you previously created reusable components like `StatCard`, `StatusBadge`, or `ConfirmModal`, leave them as-is but import them where needed.
+- Make sure routing still works:
+  - After login, EMPLOYEE goes to EmployeeDashboard using DashboardLayout.
+  - MANAGER goes to ManagerDashboard using DashboardLayout.
+ 
+6. Final touch
+- Ensure there are no unused duplicated layout elements in EmployeeDashboard or ManagerDashboard.
+- Add small polish:
+  - Hover effects on nav items.
+  - Subtle box-shadow on header and sidebar.
+  - Smooth transitions on hover (`transition`, `duration-200` if Tailwind is available).
