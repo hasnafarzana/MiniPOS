@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Spend Desk Documentation</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Spend Desk Documentation</h1>
+</header>
+<h1 id="spend-desk---expense-approval-system">Spend Desk - Expense
+Approval System</h1>
+<h2 id="project-documentation">Project Documentation</h2>
+<p><strong>Version:</strong> 1.0<br />
+<strong>Last Updated:</strong> December 2024</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#overview">Overview</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#system-architecture">System Architecture</a></li>
+<li><a href="#technology-stack">Technology Stack</a></li>
+<li><a href="#api-reference">API Reference</a></li>
+<li><a href="#database-schema">Database Schema</a></li>
+<li><a href="#user-guide">User Guide</a></li>
+<li><a href="#development-setup">Development Setup</a></li>
+</ol>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>Spend Desk is a full-stack expense approval system designed for
+organizations to manage employee expense submissions and managerial
+approvals. The application provides a streamlined workflow where:</p>
+<ul>
+<li><strong>Employees</strong> can submit expense requests with details
+like title, amount, category, and description</li>
+<li><strong>Managers</strong> can review, approve, or reject pending
+expense requests with optional remarks</li>
+</ul>
+<p>The system features role-based access control, JWT authentication,
+and a modern responsive user interface.</p>
+<hr />
+<h2 id="features">Features</h2>
+<h3 id="employee-features">Employee Features</h3>
+<ul>
+<li>Create new expense submissions with:
+<ul>
+<li>Title and description</li>
+<li>Amount in USD</li>
+<li>Category (Supplies, Travel, Equipment, Software, Training,
+Other)</li>
+<li>Date of expense</li>
+</ul></li>
+<li>View all submitted expenses with status tracking</li>
+<li>Filter expenses by status (Pending, Approved, Rejected)</li>
+<li>Dashboard with expense statistics</li>
+</ul>
+<h3 id="manager-features">Manager Features</h3>
+<ul>
+<li>View all pending expense requests requiring approval</li>
+<li>Approve or reject expenses with optional remarks</li>
+<li>View complete expense history across all employees</li>
+<li>Dashboard with approval statistics and total approved amounts</li>
+</ul>
+<h3 id="security-features">Security Features</h3>
+<ul>
+<li>JWT-based authentication</li>
+<li>Password hashing with bcrypt</li>
+<li>Protected API routes</li>
+<li>Role-based access control</li>
+</ul>
+<hr />
+<h2 id="system-architecture">System Architecture</h2>
+<h3 id="frontend-architecture">Frontend Architecture</h3>
+<p>The frontend is a React single-page application (SPA) built with
+modern tooling:</p>
+<pre><code>frontend/
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   │   └── DashboardLayout.jsx    # Shared responsive layout
+│   │   └── ui/
+│   │       ├── StatCard.jsx           # Statistics display card
+│   │       └── StatusBadge.jsx        # Status indicator badge
+│   ├── context/
+│   │   └── AuthContext.jsx            # Authentication state management
+│   ├── pages/
+│   │   ├── Login.jsx                  # User login page
+│   │   ├── Register.jsx               # User registration page
+│   │   ├── EmployeeDashboard.jsx      # Employee expense management
+│   │   └── ManagerDashboard.jsx       # Manager approval workflow
+│   ├── App.jsx                        # Main application with routing
+│   ├── main.jsx                       # Application entry point
+│   └── index.css                      # Tailwind CSS imports
+├── tailwind.config.js                 # Tailwind configuration
+├── postcss.config.js                  # PostCSS configuration
+└── vite.config.js                     # Vite build configuration</code></pre>
+<h3 id="backend-architecture">Backend Architecture</h3>
+<p>The backend is a Node.js Express REST API with SQLite database:</p>
+<pre><code>backend/
+├── db/
+│   ├── schema.sql                     # Database schema definition
+│   └── database.js                    # Database initialization
+├── models/
+│   ├── User.js                        # User data operations
+│   ├── Expense.js                     # Expense data operations
+│   ├── Approval.js                    # Approval data operations
+│   └── index.js                       # Model exports
+├── routes/
+│   ├── auth.js                        # Authentication endpoints
+│   ├── expenses.js                    # Employee expense endpoints
+│   └── manager.js                     # Manager approval endpoints
+├── middleware/
+│   └── auth.js                        # JWT authentication middleware
+└── server.js                          # Express server configuration</code></pre>
+<hr />
+<h2 id="technology-stack">Technology Stack</h2>
+<h3 id="frontend">Frontend</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Technology</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>React 18</td>
+<td>UI component library</td>
+</tr>
+<tr class="even">
+<td>Vite</td>
+<td>Build tool and dev server</td>
+</tr>
+<tr class="odd">
+<td>Tailwind CSS v4</td>
+<td>Utility-first CSS framework</td>
+</tr>
+<tr class="even">
+<td>React Router DOM</td>
+<td>Client-side routing</td>
+</tr>
+<tr class="odd">
+<td>React Context API</td>
+<td>State management</td>
+</tr>
+</tbody>
+</table>
+<h3 id="backend">Backend</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Technology</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Node.js</td>
+<td>JavaScript runtime</td>
+</tr>
+<tr class="even">
+<td>Express.js</td>
+<td>Web framework</td>
+</tr>
+<tr class="odd">
+<td>better-sqlite3</td>
+<td>SQLite database driver</td>
+</tr>
+<tr class="even">
+<td>jsonwebtoken</td>
+<td>JWT authentication</td>
+</tr>
+<tr class="odd">
+<td>bcryptjs</td>
+<td>Password hashing</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="api-reference">API Reference</h2>
+<h3 id="authentication-endpoints">Authentication Endpoints</h3>
+<h4 id="register-user">Register User</h4>
+<pre><code>POST /api/auth/register</code></pre>
+<p><strong>Request Body:</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;user@example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;password123&quot;</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;John Doe&quot;</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;role&quot;</span><span class="fu">:</span> <span class="st">&quot;EMPLOYEE&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Response:</strong> User object with JWT token</p>
+<h4 id="login">Login</h4>
+<pre><code>POST /api/auth/login</code></pre>
+<p><strong>Request Body:</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;user@example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;password&quot;</span><span class="fu">:</span> <span class="st">&quot;password123&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Response:</strong> User object with JWT token</p>
+<h4 id="get-current-user">Get Current User</h4>
+<pre><code>GET /api/auth/me
+Authorization: Bearer &lt;token&gt;</code></pre>
+<p><strong>Response:</strong> Current user object</p>
+<h3 id="employee-endpoints">Employee Endpoints</h3>
+<h4 id="create-expense">Create Expense</h4>
+<pre><code>POST /api/expenses
+Authorization: Bearer &lt;token&gt;</code></pre>
+<p><strong>Request Body:</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Office Supplies&quot;</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="fl">150.00</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;category&quot;</span><span class="fu">:</span> <span class="st">&quot;Supplies&quot;</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;date&quot;</span><span class="fu">:</span> <span class="st">&quot;2024-12-09&quot;</span><span class="fu">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Printer paper and ink&quot;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h4 id="get-my-expenses">Get My Expenses</h4>
+<pre><code>GET /api/expenses/my?status=PENDING
+Authorization: Bearer &lt;token&gt;</code></pre>
+<p><strong>Query Parameters:</strong> status (optional) - PENDING,
+APPROVED, REJECTED</p>
+<h3 id="manager-endpoints">Manager Endpoints</h3>
+<h4 id="get-pending-expenses">Get Pending Expenses</h4>
+<pre><code>GET /api/manager/expenses/pending
+Authorization: Bearer &lt;token&gt;</code></pre>
+<h4 id="get-all-expenses">Get All Expenses</h4>
+<pre><code>GET /api/manager/expenses
+Authorization: Bearer &lt;token&gt;</code></pre>
+<h4 id="make-decision">Make Decision</h4>
+<pre><code>POST /api/manager/expenses/:id/decision
+Authorization: Bearer &lt;token&gt;</code></pre>
+<p><strong>Request Body:</strong></p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;decision&quot;</span><span class="fu">:</span> <span class="st">&quot;APPROVED&quot;</span><span class="fu">,</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;remark&quot;</span><span class="fu">:</span> <span class="st">&quot;Approved for Q4 budget&quot;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<hr />
+<h2 id="database-schema">Database Schema</h2>
+<h3 id="users-table">Users Table</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>INTEGER</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td>email</td>
+<td>TEXT</td>
+<td>Unique email address</td>
+</tr>
+<tr class="odd">
+<td>password</td>
+<td>TEXT</td>
+<td>Hashed password</td>
+</tr>
+<tr class="even">
+<td>name</td>
+<td>TEXT</td>
+<td>User’s full name</td>
+</tr>
+<tr class="odd">
+<td>role</td>
+<td>TEXT</td>
+<td>EMPLOYEE or MANAGER</td>
+</tr>
+<tr class="even">
+<td>created_at</td>
+<td>DATETIME</td>
+<td>Account creation timestamp</td>
+</tr>
+</tbody>
+</table>
+<h3 id="expenses-table">Expenses Table</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>INTEGER</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td>user_id</td>
+<td>INTEGER</td>
+<td>Foreign key to users</td>
+</tr>
+<tr class="odd">
+<td>title</td>
+<td>TEXT</td>
+<td>Expense title</td>
+</tr>
+<tr class="even">
+<td>amount</td>
+<td>REAL</td>
+<td>Amount in USD</td>
+</tr>
+<tr class="odd">
+<td>category</td>
+<td>TEXT</td>
+<td>Expense category</td>
+</tr>
+<tr class="even">
+<td>date</td>
+<td>TEXT</td>
+<td>Date of expense</td>
+</tr>
+<tr class="odd">
+<td>description</td>
+<td>TEXT</td>
+<td>Optional description</td>
+</tr>
+<tr class="even">
+<td>status</td>
+<td>TEXT</td>
+<td>PENDING, APPROVED, REJECTED</td>
+</tr>
+<tr class="odd">
+<td>created_at</td>
+<td>DATETIME</td>
+<td>Submission timestamp</td>
+</tr>
+</tbody>
+</table>
+<h3 id="approvals-table">Approvals Table</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>INTEGER</td>
+<td>Primary key</td>
+</tr>
+<tr class="even">
+<td>expense_id</td>
+<td>INTEGER</td>
+<td>Foreign key to expenses</td>
+</tr>
+<tr class="odd">
+<td>manager_id</td>
+<td>INTEGER</td>
+<td>Foreign key to users</td>
+</tr>
+<tr class="even">
+<td>decision</td>
+<td>TEXT</td>
+<td>APPROVED or REJECTED</td>
+</tr>
+<tr class="odd">
+<td>remark</td>
+<td>TEXT</td>
+<td>Optional manager remark</td>
+</tr>
+<tr class="even">
+<td>created_at</td>
+<td>DATETIME</td>
+<td>Decision timestamp</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="user-guide">User Guide</h2>
+<h3 id="for-employees">For Employees</h3>
+<ol type="1">
+<li><strong>Registration</strong>: Create an account at the registration
+page, selecting “Employee” as your role</li>
+<li><strong>Login</strong>: Sign in with your email and password</li>
+<li><strong>Submit Expense</strong>: Click “Create Expense” in the
+sidebar to submit a new expense</li>
+<li><strong>Track Status</strong>: View all your expenses and their
+approval status on the dashboard</li>
+<li><strong>Filter</strong>: Use the status filter to view only pending,
+approved, or rejected expenses</li>
+</ol>
+<h3 id="for-managers">For Managers</h3>
+<ol type="1">
+<li><strong>Registration</strong>: Create an account selecting “Manager”
+as your role</li>
+<li><strong>Login</strong>: Sign in with your email and password</li>
+<li><strong>Review Pending</strong>: View all pending expenses requiring
+your approval</li>
+<li><strong>Make Decisions</strong>: Click “Review” on any expense to
+approve or reject it</li>
+<li><strong>Add Remarks</strong>: Optionally add remarks explaining your
+decision</li>
+<li><strong>View History</strong>: Switch to “History” tab to see all
+past decisions</li>
+</ol>
+<hr />
+<h2 id="development-setup">Development Setup</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Node.js 18 or higher</li>
+<li>npm package manager</li>
+</ul>
+<h3 id="installation">Installation</h3>
+<ol type="1">
+<li>Install dependencies:</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
+<ol start="2" type="1">
+<li>Start development servers:</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code></pre></div>
+<p>This starts both the frontend (port 5000) and backend (port 3001)
+simultaneously.</p>
+<h3 id="test-accounts">Test Accounts</h3>
+<p>For testing purposes, the following accounts are available:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Email</th>
+<th>Password</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Employee</td>
+<td>test@example.com</td>
+<td>password123</td>
+</tr>
+<tr class="even">
+<td>Manager</td>
+<td>manager@example.com</td>
+<td>password123</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="support">Support</h2>
+<p>For questions or issues, please contact the development team.</p>
+<hr />
+<p><em>Document generated for Spend Desk v1.0</em></p>
+</body>
+</html>

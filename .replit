@@ -7,6 +7,7 @@ requiredFiles = [".replit", "replit.nix", "package.json", "package-lock.json"]
 
 [nix]
 channel = "stable-24_11"
+packages = ["pandoc"]
 
 [deployment]
 run = ["node", "index.js"]
@@ -47,6 +48,10 @@ externalPort = 3001
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 35709
+externalPort = 3000
 
 [userenv]
 

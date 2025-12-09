@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const authRoutes = require('./routes/auth');
 const expenseRoutes = require('./routes/expenses');
 const managerRoutes = require('./routes/manager');
@@ -9,6 +10,8 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/docs', express.static(path.join(__dirname, '../docs')));
 
 app.get('/api/health', (req, res) => {
   res.json({
