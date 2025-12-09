@@ -9,7 +9,9 @@
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.5.0",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "jsonwebtoken": "^9.0.3"
   }
 }

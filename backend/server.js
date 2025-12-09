@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./routes/auth');
+const { authenticateToken, requireManager, requireEmployee } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,6 +15,20 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     uptime: process.uptime()
   });
+});
+
+app.use('/api/auth', authRoutes);
+
+app.get('/api/protected', authenticateToken, (req, res) => {
+  res.json({ message: 'This is a protected route', user: req.user });
+});
+
+app.get('/api/manager-only', authenticateToken, requireManager, (req, res) => {
+  res.json({ message: 'This route is for managers only', user: req.user });
+});
+
+app.get('/api/employee', authenticateToken, requireEmployee, (req, res) => {
+  res.json({ message: 'This route is for employees and managers', user: req.user });
 });
 
 app.listen(PORT, '0.0.0.0', () => {
