@@ -9,6 +9,7 @@
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
   "dependencies": {
+    "better-sqlite3": "^12.5.0",
     "concurrently": "^8.2.2"
   }
 }
